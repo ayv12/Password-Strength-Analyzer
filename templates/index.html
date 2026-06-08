@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Password Strength Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <!-- LOGOS ABOVE TITLE -->
+        <div class="logo-row">
+            <img src="{{ url_for('static', filename='lock.png') }}"
+                 alt="Lock Logo"
+                 class="logo">
+
+            <img src="{{ url_for('static', filename='python.png') }}"
+                 alt="Python Logo"
+                 class="logo">
+        </div>
+
+        <h1>Password Strength Analyzer</h1>
+
+        <h2 class="subtitle">
+            Check your password before hackers do.
+        </h2>
+
+    </div>
+
+    <form method="POST">
+
+        <input type="password"
+               name="password"
+               placeholder="Enter Password"
+               required>
+
+        <div class="strength-container">
+            <div class="strength-bar {{ strength }}"></div>
+        </div>
+
+        <div class="strength-text">
+
+            {% if strength == "weak" %}
+                Weak Password
+            {% elif strength == "medium" %}
+                Medium Password
+            {% elif strength == "strong" %}
+                Strong Password
+            {% endif %}
+
+        </div>
+
+        <button type="submit">
+            Check Password
+        </button>
+
+    </form>
+
+    {% if message %}
+    <div class="result">
+        {{ message|safe }}
+    </div>
+    {% endif %}
+
+    <div class="features">
+        For A Strong Password You Need: <br><br>
+        ✓ 8+ Characters <br>
+        ✓ Uppercase Letter <br>
+        ✓ Lowercase Letter <br>
+        ✓ Numbers <br>
+        ✓ Special Character
+    </div>
+
+    <footer>
+        Developed by Ayushi Labde
+    </footer>
+
+</div>
+
+</body>
+</html>
