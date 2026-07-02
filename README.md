@@ -18,6 +18,7 @@ https://password-strength-analyzer-15av.onrender.com
 ---
 
 ## ⚡ Features
+- Detects common and easily guessable passwords using an external wordlist
 - Password strength checker (Weak / Medium / Strong)
 - Validates password security requirements
 - Simple and responsive UI
