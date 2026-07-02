@@ -35,10 +35,19 @@
 
     <form method="POST">
 
-        <input type="password"
-               name="password"
-               placeholder="Enter Password"
-               required>
+        <div class="password-box">
+
+    <input type="password"
+           id="password"
+           name="password"
+           placeholder="Enter Password"
+           required>
+
+    <span class="eye" onclick="togglePassword()">
+        <i id="eyeIcon" class="fa fa-eye"></i>
+    </span>
+
+</div>
 
         <div class="strength-container">
             <div class="strength-bar {{ strength }}"></div>
@@ -83,5 +92,20 @@
 
 </div>
 
+
+<script>
+function togglePassword(){
+    const input = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+
+    if(input.type === "password"){
+        input.type = "text";
+        icon.className = "fa fa-eye-slash";
+    } else {
+        input.type = "password";
+        icon.className = "fa fa-eye";
+    }
+}
+</script>
 </body>
 </html>

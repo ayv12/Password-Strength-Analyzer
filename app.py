@@ -2,6 +2,13 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+with open("common_passwords.txt", "r", encoding="utf-8") as file:
+    common_passwords = {
+        line.strip().lower()
+        for line in file
+        if line.strip()
+    }
+
 @app.route("/", methods=["GET", "POST"])
 def home():
 
@@ -11,6 +18,8 @@ def home():
     if request.method == "POST":
 
         password = request.form["password"]
+
+        is_common = password.lower() in common_passwords
 
         pass_len = len(password)
 
@@ -35,10 +44,12 @@ def home():
             if char in special_char:
                 has_special = True
 
+            
+
         # Strength points
         points = 0
 
-        if pass_len >= 8:
+        if pass_len >= 6:
             points += 1
 
         if has_upper:
@@ -52,6 +63,9 @@ def home():
 
         if has_special:
             points += 1
+
+        if is_common:
+            points = max(0, points - 3)
 
         # Strength Level
 
@@ -67,11 +81,12 @@ def home():
         # Validation Messages
 
         if (
-            pass_len >= 8
+            pass_len >= 6
             and has_upper
             and has_lower
             and has_number
             and has_special
+            and not is_common
         ):
 
             message = """
@@ -86,8 +101,10 @@ def home():
             """
 
         else:
+            if is_common:
+                message += "❌ This password appears in a database of common passwords and can be guessed easily.<br>"
 
-            if pass_len < 8:
+            if pass_len < 6:
                 message += "❌ Password must be at least 8 characters long<br>"
 
             if not has_upper:
